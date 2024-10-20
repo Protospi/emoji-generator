@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Any custom styles should be placed after these directives */
+body {
+  background-color: #f0f0f0;
+}
+
+/* You may need to adjust these styles based on your specific needs */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

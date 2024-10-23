@@ -37,7 +37,7 @@ TABLE profiles (
 
 2. Upload emoji to 'emojis' Supabase storage bucket
 
-    1. When a user generates an emoji, upload the emoji image file returned from Replicate to the Supabase 'emojis' storage bucket.
+    1. When a user generates an emoji, upload the emoji image file returned dall-e openai in the page.tsx generateEmoji to the Supabase 'emojis' storage bucket.
     2. Add the image URL to the 'emojis' data table as "image_url", and creator_user_id to be the actual user_id.
 
 3. Display all images in emoji grid

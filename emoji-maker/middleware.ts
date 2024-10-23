@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createSupabaseClient } from "./utils/supabase-client";
+import { createClient } from "./utils/supabase-client";
 
 // Add these lines at the top of the file
 export const runtime = 'edge';
@@ -18,7 +18,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   // If the user is logged in and the route is protected, create or update the user profile
   if (userId && isProtectedRoute(req)) {
-    const supabase = createSupabaseClient();
+    const supabase = createClient();
 
     if (supabase) {
       try {

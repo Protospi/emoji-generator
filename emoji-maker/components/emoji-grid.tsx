@@ -12,14 +12,14 @@ interface Emoji {
 }
 
 export function EmojiGrid({ emojis }: { emojis: Emoji[] }) {
-  const [likedEmojis, setLikedEmojis] = useState<Record<string, number>>({});
+  const [likedEmojis, setLikedEmojis] = useState<Record<string, boolean>>({});
   const [selectedEmoji, setSelectedEmoji] = useState<Emoji | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleLike = (id: string) => {
     setLikedEmojis(prev => ({
       ...prev,
-      [id]: (prev[id] || 0) + 1
+      [id]: !prev[id]
     }));
   };
 
@@ -103,7 +103,7 @@ export function EmojiGrid({ emojis }: { emojis: Emoji[] }) {
                       likedEmojis[emoji.id] ? 'text-red-500 fill-current' : 'text-red-500'
                     }`}
                   />
-                  {likedEmojis[emoji.id] > 0 ? likedEmojis[emoji.id] : ''}
+                  {likedEmojis[emoji.id] ? '1' : ''}
                 </span>
               </div>
             </CardContent>
@@ -139,11 +139,12 @@ export function EmojiGrid({ emojis }: { emojis: Emoji[] }) {
                 <span className="text-lg font-medium">{selectedEmoji.prompt}</span>
                 <span className="text-lg flex items-center">
                   <Heart
-                    className={`w-6 h-6 mr-2 ${
+                    className={`w-6 h-6 mr-2 cursor-pointer ${
                       likedEmojis[selectedEmoji.id] ? 'text-red-500 fill-current' : 'text-red-500'
                     }`}
+                    onClick={() => handleLike(selectedEmoji.id)}
                   />
-                  {likedEmojis[selectedEmoji.id] > 0 ? likedEmojis[selectedEmoji.id] : ''}
+                  {likedEmojis[selectedEmoji.id] ? '1' : ''}
                 </span>
               </div>
             </CardContent>

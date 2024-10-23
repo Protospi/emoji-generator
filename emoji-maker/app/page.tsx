@@ -30,15 +30,33 @@ export default function Home() {
         n: 1,
         size: "1024x1024",
       });
+
+      const imageUrl = response.data[0].url ?? '';
+
+      // Call the API route to save the emoji
+      const saveResponse = await fetch('/api/generate-emoji', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: imageUrl, prompt: prompt }),
+      });
+
+      if (!saveResponse.ok) {
+        throw new Error('Failed to save emoji');
+      }
+
+      const savedEmoji = await saveResponse.json();
+
       const newEmoji: Emoji = {
-        id: Date.now().toString(),
-        url: response.data[0].url ?? '', // Use empty string as fallback
+        id: savedEmoji.emoji.id,
+        url: imageUrl,
         prompt: prompt,
-        likes: 0, // Initialize likes to 0
+        likes: 0,
       };
       setEmojis((prevEmojis) => [newEmoji, ...prevEmojis]);
     } catch (error) {
-      console.error('Error generating image:', error);
+      console.error('Error generating or saving image:', error);
     } finally {
       setIsGenerating(false);
     }
